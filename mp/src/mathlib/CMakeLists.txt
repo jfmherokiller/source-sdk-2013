@@ -79,7 +79,7 @@ target_compile_options(mathlib PRIVATE
         -Wno-parentheses
         -Wno-logical-op-parentheses
         -Wno-c++11-narrowing
-        -F/Users/jfmmeyers/source-sdk-2013/mp/src/build/Debug
+        -F${CMAKE_SOURCE_DIR}/build/Debug
         -Usprintf
         -Ustrncpy
         -UPROTECTED_THINGS_ENABLE
@@ -96,7 +96,7 @@ target_compile_definitions(mathlib PRIVATE
         _OSX
         _POSIX=1
         VPCGAME=hl2mp
-        PROJECTDIR=/Users/jfmmeyers/source-sdk-2013/mp/src/vgui2/vgui_controls
+        PROJECTDIR=${CMAKE_SOURCE_DIR}/vgui2/vgui_controls
         _DARWIN_UNLIMITED_SELECT
         PNG_NO_PEDANTIC_WARNINGS
         COMPILER_GCC
@@ -121,16 +121,16 @@ target_compile_definitions(mathlib PRIVATE
         GL_GLEXT_PROTOTYPES
         )
 target_include_directories(mathlib PRIVATE
-        /Users/jfmmeyers/source-sdk-2013/mp/src/common
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public/tier0
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public/tier1
-        /Users/jfmmeyers/source-sdk-2013/mp/src/thirdparty/SDL2
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public/mathlib
-        /Users/jfmmeyers/source-sdk-2013/mp/src/build/Debug/include
+        ${CMAKE_SOURCE_DIR}/common
+        ${CMAKE_SOURCE_DIR}/public
+        ${CMAKE_SOURCE_DIR}/public/tier0
+        ${CMAKE_SOURCE_DIR}/public/tier1
+        ${CMAKE_SOURCE_DIR}/thirdparty/SDL2
+        ${CMAKE_SOURCE_DIR}/public/mathlib
+        ${CMAKE_SOURCE_DIR}/build/Debug/include
         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/malloc
-        /Users/jfmmeyers/source-sdk-2013/mp/src/build/everything.build/Debug/mathlib.build/DerivedSources/i386
-        /Users/jfmmeyers/source-sdk-2013/mp/src/build/everything.build/Debug/mathlib.build/DerivedSources
+        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/mathlib.build/DerivedSources/i386
+        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/mathlib.build/DerivedSources
         )
 target_include_directories(mathlib SYSTEM PRIVATE
         )

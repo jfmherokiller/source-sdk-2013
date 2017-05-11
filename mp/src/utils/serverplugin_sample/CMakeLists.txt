@@ -4,70 +4,7 @@ add_library(server-plugin SHARED
         serverplugin_empty.cpp
         ../../public/tier0/memoverride.cpp
         )
-target_compile_options(server-plugin PRIVATE
-        -c
-        -Qunused-arguments
-        -arch i386
-        -fmessage-length=137
-        -fmacro-backtrace-limit=0
-        -fcolor-diagnostics
-        -std=gnu++11
-        -Wno-trigraphs
-        -fpascal-strings
-        -O0
-        -Wno-missing-field-initializers
-        -Wno-missing-prototypes
-        -Wno-return-type
-        -Wno-non-virtual-dtor
-        -Wno-overloaded-virtual
-        -Wno-exit-time-destructors
-        -Wno-missing-braces
-        -Wparentheses
-        -Wswitch
-        -Wno-unused-function
-        -Wno-unused-label
-        -Wno-unused-parameter
-        -Wno-unused-variable
-        -Wunused-value
-        -Wno-empty-body
-        -Wno-uninitialized
-        -Wno-unknown-pragmas
-        -Wno-shadow
-        -Wno-four-char-constants
-        -Wno-conversion
-        -Wno-constant-conversion
-        -Wno-int-conversion
-        -Wno-bool-conversion
-        -Wno-enum-conversion
-        -Wno-shorten-64-to-32
-        -Wno-newline-eof
-        -Wno-c++11-extensions
-        -fasm-blocks
-        -ffast-math
-        -fstrict-aliasing
-        -Wdeprecated-declarations
-        -Wno-invalid-offsetof
-        -mmacosx-version-min=10.5
-        -g
-        -fvisibility=hidden
-        -fvisibility-inlines-hidden
-        -Wno-sign-conversion
-        -Wno-infinite-recursion
-        -Wno-move
-        -Wno-deprecated-writable-strings
-        -Wno-switch-enum
-        -Wno-switch
-        -Wno-unused-value
-        -Wno-parentheses
-        -Wno-logical-op-parentheses
-        -Wno-c++11-narrowing
-        -F/Users/jfmmeyers/source-sdk-2013/mp/src/build/Debug
-        -Usprintf
-        -Ustrncpy
-        -UPROTECTED_THINGS_ENABLE
-        -ftemplate-depth=512
-        --serialize-diagnostics
-        )
+
 target_compile_definitions(server-plugin PRIVATE
         FORCE_QUICKTIME
         DX_TO_GL_ABSTRACTION
@@ -79,7 +16,7 @@ target_compile_definitions(server-plugin PRIVATE
         _POSIX=1
         VPCGAME=hl2mp
         _MBCS
-        PROJECTDIR=/Users/jfmmeyers/source-sdk-2013/mp/src/vgui2/vgui_controls
+        PROJECTDIR=${CMAKE_SOURCE_DIR}/vgui2/vgui_controls
         _DARWIN_UNLIMITED_SELECT
         PNG_NO_PEDANTIC_WARNINGS
         COMPILER_GCC
@@ -105,17 +42,16 @@ target_compile_definitions(server-plugin PRIVATE
         GL_GLEXT_PROTOTYPES
         )
 target_include_directories(server-plugin PRIVATE
-        /Users/jfmmeyers/source-sdk-2013/mp/src/common
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public/tier0
-        /Users/jfmmeyers/source-sdk-2013/mp/src/public/tier1
-        /Users/jfmmeyers/source-sdk-2013/mp/src/thirdparty/SDL2
-        /Users/jfmmeyers/source-sdk-2013/mp/src/game/server
-        /Users/jfmmeyers/source-sdk-2013/mp/src/game/shared
-        /Users/jfmmeyers/source-sdk-2013/mp/src/build/Debug/include
-        /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/malloc
-        /Users/jfmmeyers/source-sdk-2013/mp/src/build/everything.build/Debug/serverplugin_empty.build/DerivedSources/i386
-        /Users/jfmmeyers/source-sdk-2013/mp/src/build/everything.build/Debug/serverplugin_empty.build/DerivedSources
+        ${CMAKE_SOURCE_DIR}/common
+        ${CMAKE_SOURCE_DIR}/public
+        ${CMAKE_SOURCE_DIR}/public/tier0
+        ${CMAKE_SOURCE_DIR}/public/tier1
+        ${CMAKE_SOURCE_DIR}/thirdparty/SDL2
+        ${CMAKE_SOURCE_DIR}/game/server
+        ${CMAKE_SOURCE_DIR}/game/shared
+        ${CMAKE_SOURCE_DIR}/build/Debug/include
+        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/serverplugin_empty.build/DerivedSources/i386
+        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/serverplugin_empty.build/DerivedSources
         )
 target_include_directories(server-plugin SYSTEM PRIVATE
         )

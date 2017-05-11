@@ -1,12 +1,47 @@
-add_library(materialsystem STATIC
-        ../public/tier0/memoverride.cpp
-        stdshaders/example_model_dx9.cpp
-        stdshaders/BaseVSShader.cpp
-        stdshaders/screenspace_general.cpp
-        stdshaders/Bloom.cpp
-        stdshaders/example_model_dx9_helper.cpp
+add_library(tier1 STATIC
+        snappy.cpp
+        checksum_sha1.cpp
+        ilocalize.cpp
+        commandbuffer.cpp
+        utlbinaryblock.cpp
+        utlbuffer.cpp
+        ../utils/lzma/C/LzmaDec.c
+        byteswap.cpp
+        mempool.cpp
+        kvpacker.cpp
+        rangecheckedvar.cpp
+        snappy-stubs-internal.cpp
+        NetAdr.cpp
+        strtools.cpp
+        snappy-sinksource.cpp
+        KeyValues.cpp
+        processor_detect_linux.cpp
+        lzmaDecoder.cpp
+        utlbufferutil.cpp
+        sparsematrix.cpp
+        uniqueid.cpp
+        diff.cpp
+        tier1.cpp
+        utlsymbol.cpp
+        characterset.cpp
+        memstack.cpp
+        checksum_crc.cpp
+        newbitbuf.cpp
+        strtools_unicode.cpp
+        checksum_md5.cpp
+        splitstring.cpp
+        interface.cpp
+        tokenreader.cpp
+        convar.cpp
+        generichash.cpp
+        stringpool.cpp
+        bitbuf.cpp
+        reliabletimer.cpp
+        utlstring.cpp
+        datamanager.cpp
         )
-target_compile_options(materialsystem PRIVATE
+target_compile_options(tier1 PRIVATE
+#        -c
 #        -Qunused-arguments
 #        -x c++
 #        -arch i386
@@ -44,7 +79,6 @@ target_compile_options(materialsystem PRIVATE
 #        -Wno-shorten-64-to-32
 #        -Wno-newline-eof
 #        -Wno-c++11-extensions
-#        -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk
 #        -fasm-blocks
 #        -ffast-math
 #        -fstrict-aliasing
@@ -71,20 +105,18 @@ target_compile_options(materialsystem PRIVATE
 #        -ftemplate-depth=512
 #        --serialize-diagnostics
         )
-target_compile_definitions(materialsystem PRIVATE
+target_compile_definitions(tier1 PRIVATE
         FORCE_QUICKTIME
         DX_TO_GL_ABSTRACTION
         _DLL_EXT=.dylib
-        VPC
+        TIER1_STATIC_LIB
         POSIX
         QUICKTIME_VIDEO
-        GAME_SHADER_DLL
-        FAST_MATERIALVAR_ACCESS
-        DLLNAME=game_shader_dx9
+        VPC
         _OSX
         _POSIX=1
         VPCGAME=hl2mp
-        PROJECTDIR=${CMAKE_SOURCE_DIR}/vgui2/vgui_controls
+        PROJECTDIR=${CMAKE_SOURCE_DIR}/tier1
         _DARWIN_UNLIMITED_SELECT
         PNG_NO_PEDANTIC_WARNINGS
         COMPILER_GCC
@@ -104,22 +136,19 @@ target_compile_definitions(materialsystem PRIVATE
         OSX
         _DEBUG
         GNUC
-        STDSHADER_DX9_DLL_EXPORT
         VPCGAMECAPS=HL2MP
         GL_GLEXT_PROTOTYPES
         )
-target_include_directories(materialsystem PRIVATE
+target_include_directories(tier1 PRIVATE
         ${CMAKE_SOURCE_DIR}/common
         ${CMAKE_SOURCE_DIR}/public
         ${CMAKE_SOURCE_DIR}/public/tier0
         ${CMAKE_SOURCE_DIR}/public/tier1
         ${CMAKE_SOURCE_DIR}/thirdparty/SDL2
-        ${CMAKE_SOURCE_DIR}/materialsystem/stdshaders/fxctmp9
-        ${CMAKE_SOURCE_DIR}/materialsystem/stdshaders/vshtmp9
         ${CMAKE_SOURCE_DIR}/build/Debug/include
         /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.12.sdk/usr/include/malloc
-        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/shaders
-        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/shaders
+        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/tier1.build/DerivedSources/i386
+        ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/tier1.build/DerivedSources
         )
-target_include_directories(materialsystem SYSTEM PRIVATE
+target_include_directories(tier1 SYSTEM PRIVATE
         )
