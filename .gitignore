@@ -87,3 +87,4 @@ xcuserdata/
 *osx64*
 
 *.project
+mp/src/.idea/*
