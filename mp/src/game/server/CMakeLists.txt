@@ -615,10 +615,10 @@ target_compile_definitions(server PRIVATE
         OSX
         DLLNAME=server
         _DEBUG
-        _snprintf=use_Q_snprintf_instead
         GNUC
         VPCGAMECAPS=HL2MP
         GL_GLEXT_PROTOTYPES
+        _snprintf=use_Q_snprintf_instead
         )
 target_include_directories(server PRIVATE
         ${CMAKE_SOURCE_DIR}/common
@@ -640,6 +640,4 @@ target_include_directories(server PRIVATE
         ${CMAKE_SOURCE_DIR}/build/Debug/mod_hl2mp/include
         ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/server
         ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/server
-        )
-target_include_directories(server SYSTEM PRIVATE
         )

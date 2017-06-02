@@ -555,14 +555,14 @@ target_compile_definitions(client PRIVATE
         FD_SETSIZE=10240
         OSX
         CLIENT_DLL
-        _snprintf=use_Q_snprintf_instead
         GNUC
         DLLNAME=client
         VPCGAMECAPS=HL2MP
         GL_GLEXT_PROTOTYPES
         _DEBUG
+        _snprintf=use_Q_snprintf_instead
         )
-target_include_directories(client PRIVATE
+include_directories(
         ${CMAKE_SOURCE_DIR}/game/client
         ${CMAKE_SOURCE_DIR}/common
         ${CMAKE_SOURCE_DIR}/public
@@ -585,6 +585,23 @@ target_include_directories(client PRIVATE
         ${CMAKE_SOURCE_DIR}/build/Debug/mod_hl2mp/include
         ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/client
         ${CMAKE_SOURCE_DIR}/build/everything.build/Debug/client
+)
+link_directories(${CMAKE_SOURCE_DIR}/lib/public/osx32)
+set(LIBS vgui2 mathlib tier1 raytrace
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/libtier0.dylib
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/libvstdlib.dylib
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/choreoobjects.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/libsteam_api.dylib
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/libcrypto.dylib
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/vtf.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/tier2.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/tier3.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/bitmap.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/particles.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/matsys_controls.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/vgui_controls.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/shaderlib.a
+        ${CMAKE_SOURCE_DIR}/lib/public/osx32/dmxloader.a
+        ${ICONV_LIBRARIES}
         )
-target_include_directories(client SYSTEM PRIVATE
-        )
+target_link_libraries(client ${LIBS})
