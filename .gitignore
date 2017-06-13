@@ -88,3 +88,8 @@ xcuserdata/
 
 *.project
 mp/src/.idea/*
+mp/src/.vs/*
+*.pdb
+*.sentinel
+mp/src/_ReSharper.Caches/*
+mp/src/utils/*/Debug/*
