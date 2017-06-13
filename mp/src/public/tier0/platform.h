@@ -225,16 +225,9 @@ typedef signed char int8;
 //-----------------------------------------------------------------------------
 // Set up platform type defines.
 //-----------------------------------------------------------------------------
-#if defined( PLATFORM_X360 ) || defined( _PS3 )
-	#if !defined( _GAMECONSOLE )
-		#define _GAMECONSOLE
-	#endif
-	#define IsPC()			false
-	#define IsGameConsole()	true
-#else
+
 	#define IsPC()			true
 	#define IsGameConsole()	false
-#endif
 
 #ifdef PLATFORM_64BITS
 	#define IsPlatform64Bits()	true
@@ -313,11 +306,9 @@ typedef unsigned int		uint;
 // Note: NJS: This is not enabled for regular PC, due to not knowing the implications of exporting a class with no no vtable.
 //       It's probable that this shouldn't be an issue, but an experiment should be done to verify this.
 //
-#ifndef _X360
+
 #define abstract_class class
-#else
-#define abstract_class class NO_VTABLE
-#endif
+
 
 
 // MSVC CRT uses 0x7fff while gcc uses MAX_INT, leading to mismatches between platforms
