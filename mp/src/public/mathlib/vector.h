@@ -349,14 +349,14 @@ class TableVector
 public:
 	vec_t x, y, z;
 
-	operator Vector &()				{ return *((Vector *)(this)); }
-	operator const Vector &() const	{ return *((const Vector *)(this)); }
+	operator Vector &()				{ return *reinterpret_cast<Vector *>(this); }
+	operator const Vector &() const	{ return *reinterpret_cast<const Vector *>(this); }
 
 	// array access...
 	inline vec_t& operator[](int i)
 	{
 		Assert( (i >= 0) && (i < 3) );
-		return ((vec_t*)this)[i];
+		return reinterpret_cast<vec_t*>(this)[i];
 	}
 
 	inline vec_t operator[](int i) const
@@ -554,9 +554,9 @@ inline void Vector::Init( vec_t ix, vec_t iy, vec_t iz )
 
 inline void Vector::Random( vec_t minVal, vec_t maxVal )
 {
-	x = minVal + ((float)rand() / VALVE_RAND_MAX) * (maxVal - minVal);
-	y = minVal + ((float)rand() / VALVE_RAND_MAX) * (maxVal - minVal);
-	z = minVal + ((float)rand() / VALVE_RAND_MAX) * (maxVal - minVal);
+	x = minVal + (static_cast<float>(rand()) / VALVE_RAND_MAX) * (maxVal - minVal);
+	y = minVal + (static_cast<float>(rand()) / VALVE_RAND_MAX) * (maxVal - minVal);
+	z = minVal + (static_cast<float>(rand()) / VALVE_RAND_MAX) * (maxVal - minVal);
 	CHECK_VALID(*this);
 }
 
@@ -589,7 +589,7 @@ inline Vector& Vector::operator=(const Vector &vOther)
 inline vec_t& Vector::operator[](int i)
 {
 	Assert( (i >= 0) && (i < 3) );
-	return ((vec_t*)this)[i];
+	return reinterpret_cast<vec_t*>(this)[i];
 }
 
 inline vec_t Vector::operator[](int i) const
@@ -604,7 +604,7 @@ inline vec_t Vector::operator[](int i) const
 //-----------------------------------------------------------------------------
 inline vec_t* Vector::Base()
 {
-	return (vec_t*)this;
+	return reinterpret_cast<vec_t*>(this);
 }
 
 inline vec_t const* Vector::Base() const
@@ -618,12 +618,12 @@ inline vec_t const* Vector::Base() const
 
 inline Vector2D& Vector::AsVector2D()
 {
-	return *(Vector2D*)this;
+	return *reinterpret_cast<Vector2D*>(this);
 }
 
 inline const Vector2D& Vector::AsVector2D() const
 {
-	return *(const Vector2D*)this;
+	return *reinterpret_cast<const Vector2D*>(this);
 }
 
 //-----------------------------------------------------------------------------
@@ -818,7 +818,7 @@ inline short ShortVector::operator[](int i) const
 inline short& ShortVector::operator[](int i)
 {
 	Assert( (i >= 0) && (i < 4) );
-	return ((short*)this)[i];
+	return reinterpret_cast<short*>(this)[i];
 }
 
 //-----------------------------------------------------------------------------
@@ -826,12 +826,12 @@ inline short& ShortVector::operator[](int i)
 //-----------------------------------------------------------------------------
 inline short* ShortVector::Base()
 {
-	return (short*)this;
+	return reinterpret_cast<short*>(this);
 }
 
 inline short const* ShortVector::Base() const
 {
-	return (short const*)this;
+	return reinterpret_cast<short const*>(this);
 }
 
 
@@ -968,7 +968,7 @@ inline int IntVector4D::operator[](int i) const
 inline int& IntVector4D::operator[](int i)
 {
 	Assert( (i >= 0) && (i < 4) );
-	return ((int*)this)[i];
+	return reinterpret_cast<int*>(this)[i];
 }
 
 //-----------------------------------------------------------------------------
@@ -976,12 +976,12 @@ inline int& IntVector4D::operator[](int i)
 //-----------------------------------------------------------------------------
 inline int* IntVector4D::Base()
 {
-	return (int*)this;
+	return reinterpret_cast<int*>(this);
 }
 
 inline int const* IntVector4D::Base() const
 {
-	return (int const*)this;
+	return reinterpret_cast<int const*>(this);
 }
 
 
@@ -1956,7 +1956,7 @@ inline QAngle& QAngle::operator=(const QAngle &vOther)
 inline vec_t& QAngle::operator[](int i)
 {
 	Assert( (i >= 0) && (i < 3) );
-	return ((vec_t*)this)[i];
+	return reinterpret_cast<vec_t*>(this)[i];
 }
 
 inline vec_t QAngle::operator[](int i) const
@@ -1971,12 +1971,12 @@ inline vec_t QAngle::operator[](int i) const
 //-----------------------------------------------------------------------------
 inline vec_t* QAngle::Base()
 {
-	return (vec_t*)this;
+	return reinterpret_cast<vec_t*>(this);
 }
 
 inline vec_t const* QAngle::Base() const
 {
-	return (vec_t const*)this;
+	return reinterpret_cast<vec_t const*>(this);
 }
 
 

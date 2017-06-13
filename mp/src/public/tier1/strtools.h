@@ -147,8 +147,8 @@ const void *), void *context );
 // returns string immediately following prefix, (ie str+strlen(prefix)) or NULL if prefix not found
 const char *StringAfterPrefix             ( const char *str, const char *prefix );
 const char *StringAfterPrefixCaseSensitive( const char *str, const char *prefix );
-inline bool	StringHasPrefix             ( const char *str, const char *prefix ) { return StringAfterPrefix             ( str, prefix ) != NULL; }
-inline bool	StringHasPrefixCaseSensitive( const char *str, const char *prefix ) { return StringAfterPrefixCaseSensitive( str, prefix ) != NULL; }
+inline bool	StringHasPrefix             ( const char *str, const char *prefix ) { return StringAfterPrefix             ( str, prefix ) != nullptr; }
+inline bool	StringHasPrefixCaseSensitive( const char *str, const char *prefix ) { return StringAfterPrefixCaseSensitive( str, prefix ) != nullptr; }
 
 
 template< bool CASE_SENSITIVE > inline bool _V_strEndsWithInner( const char *pStr, const char *pSuffix )
@@ -194,34 +194,34 @@ inline bool V_isdigit( char c )
 // considerations make some of the CRT functions slow.
 //#undef isdigit // In case this is implemented as a macro
 //#define isdigit use_V_isdigit_instead_of_isdigit
-inline bool V_isalpha(char c) { return isalpha( (unsigned char)c ) != 0; }
+inline bool V_isalpha(char c) { return isalpha( static_cast<unsigned char>(c) ) != 0; }
 //#undef isalpha
 //#define isalpha use_V_isalpha_instead_of_isalpha
-inline bool V_isalnum(char c) { return isalnum( (unsigned char)c ) != 0; }
+inline bool V_isalnum(char c) { return isalnum( static_cast<unsigned char>(c) ) != 0; }
 //#undef isalnum
 //#define isalnum use_V_isalnum_instead_of_isalnum
-inline bool V_isprint(char c) { return isprint( (unsigned char)c ) != 0; }
+inline bool V_isprint(char c) { return isprint( static_cast<unsigned char>(c) ) != 0; }
 //#undef isprint
 //#define isprint use_V_isprint_instead_of_isprint
-inline bool V_isxdigit(char c) { return isxdigit( (unsigned char)c ) != 0; }
+inline bool V_isxdigit(char c) { return isxdigit( static_cast<unsigned char>(c) ) != 0; }
 //#undef isxdigit
 //#define isxdigit use_V_isxdigit_instead_of_isxdigit
-inline bool V_ispunct(char c) { return ispunct( (unsigned char)c ) != 0; }
+inline bool V_ispunct(char c) { return ispunct( static_cast<unsigned char>(c) ) != 0; }
 //#undef ispunct
 //#define ispunct use_V_ispunct_instead_of_ispunct
-inline bool V_isgraph(char c) { return isgraph( (unsigned char)c ) != 0; }
+inline bool V_isgraph(char c) { return isgraph( static_cast<unsigned char>(c) ) != 0; }
 //#undef isgraph
 //#define isgraph use_V_isgraph_instead_of_isgraph
-inline bool V_isupper(char c) { return isupper( (unsigned char)c ) != 0; }
+inline bool V_isupper(char c) { return isupper( static_cast<unsigned char>(c) ) != 0; }
 //#undef isupper
 //#define isupper use_V_isupper_instead_of_isupper
-inline bool V_islower(char c) { return islower( (unsigned char)c ) != 0; }
+inline bool V_islower(char c) { return islower( static_cast<unsigned char>(c) ) != 0; }
 //#undef islower
 //#define islower use_V_islower_instead_of_islower
-inline bool V_iscntrl(char c) { return iscntrl( (unsigned char)c ) != 0; }
+inline bool V_iscntrl(char c) { return iscntrl( static_cast<unsigned char>(c) ) != 0; }
 //#undef iscntrl
 //#define iscntrl use_V_iscntrl_instead_of_iscntrl
-inline bool V_isspace(char c) { return isspace( (unsigned char)c ) != 0; }
+inline bool V_isspace(char c) { return isspace( static_cast<unsigned char>(c) ) != 0; }
 //#undef isspace
 //#define isspace use_V_isspace_instead_of_isspace
 
@@ -237,7 +237,7 @@ void V_strncpy( OUT_Z_CAP(maxLenInChars) char *pDest, const char *pSrc, int maxL
 // Ultimate safe strcpy function, for arrays only -- buffer size is inferred by the compiler
 template <size_t maxLenInChars> void V_strcpy_safe( OUT_Z_ARRAY char (&pDest)[maxLenInChars], const char *pSrc ) 
 { 
-	V_strncpy( pDest, pSrc, (int)maxLenInChars ); 
+	V_strncpy( pDest, pSrc, static_cast<int>(maxLenInChars) ); 
 }
 
 // A function which duplicates a string using new[] to allocate the new string.
@@ -259,19 +259,19 @@ template <size_t maxLenInChars> void V_wcscpy_safe( OUT_Z_ARRAY wchar_t (&pDest)
 char *V_strncat( INOUT_Z_CAP(cchDest) char *pDest, const char *pSrc, size_t cchDest, int max_chars_to_copy=COPY_ALL_CHARACTERS );
 template <size_t cchDest> char *V_strcat_safe( INOUT_Z_ARRAY char (&pDest)[cchDest], const char *pSrc, int nMaxCharsToCopy=COPY_ALL_CHARACTERS )
 { 
-	return V_strncat( pDest, pSrc, (int)cchDest, nMaxCharsToCopy ); 
+	return V_strncat( pDest, pSrc, static_cast<int>(cchDest), nMaxCharsToCopy ); 
 }
 
 wchar_t *V_wcsncat( INOUT_Z_CAP(cchDest) wchar_t *pDest, const wchar_t *pSrc, size_t cchDest, int nMaxCharsToCopy=COPY_ALL_CHARACTERS );
 template <size_t cchDest> wchar_t *V_wcscat_safe( INOUT_Z_ARRAY wchar_t (&pDest)[cchDest], const wchar_t *pSrc, int nMaxCharsToCopy=COPY_ALL_CHARACTERS )
 { 
-	return V_wcsncat( pDest, pSrc, (int)cchDest, nMaxCharsToCopy ); 
+	return V_wcsncat( pDest, pSrc, static_cast<int>(cchDest), nMaxCharsToCopy ); 
 }
 
 char *V_strnlwr( INOUT_Z_CAP(cchBuf) char *pBuf, size_t cchBuf);
 template <size_t cchDest> char *V_strlwr_safe( INOUT_Z_ARRAY char (&pBuf)[cchDest] )
 { 
-	return _V_strnlwr( pBuf, (int)cchDest ); 
+	return _V_strnlwr( pBuf, static_cast<int>(cchDest) ); 
 }
 
 // Unicode string conversion policies - what to do if an illegal sequence is encountered
@@ -325,9 +325,9 @@ int Q_UnicodeRepair( uchar32 *pUTF32, EStringConvertErrorPolicy ePolicy = STRING
 char *Q_UnicodeAdvance( char *pUTF8, int nCharacters );
 uchar16 *Q_UnicodeAdvance( uchar16 *pUTF16, int nCharactersnCharacters );
 uchar32 *Q_UnicodeAdvance( uchar32 *pUTF32, int nChars );
-inline const char *Q_UnicodeAdvance( const char *pUTF8, int nCharacters ) { return Q_UnicodeAdvance( (char*) pUTF8, nCharacters ); }
-inline const uchar16 *Q_UnicodeAdvance( const uchar16 *pUTF16, int nCharacters ) { return Q_UnicodeAdvance( (uchar16*) pUTF16, nCharacters ); }
-inline const uchar32 *Q_UnicodeAdvance( const uchar32 *pUTF32, int nCharacters ) { return Q_UnicodeAdvance( (uchar32*) pUTF32, nCharacters ); }
+inline const char *Q_UnicodeAdvance( const char *pUTF8, int nCharacters ) { return Q_UnicodeAdvance( const_cast<char*>(pUTF8), nCharacters ); }
+inline const uchar16 *Q_UnicodeAdvance( const uchar16 *pUTF16, int nCharacters ) { return Q_UnicodeAdvance( const_cast<uchar16*>(pUTF16), nCharacters ); }
+inline const uchar32 *Q_UnicodeAdvance( const uchar32 *pUTF32, int nCharacters ) { return Q_UnicodeAdvance( const_cast<uchar32*>(pUTF32), nCharacters ); }
 
 // Truncate to maximum of N Unicode code points (printed glyphs or non-printing characters)
 inline void Q_UnicodeTruncate( char *pUTF8, int nCharacters ) { *Q_UnicodeAdvance( pUTF8, nCharacters ) = 0; }
@@ -596,7 +596,7 @@ bool V_RemoveDotSlashes( char *pFilename, char separator = CORRECT_PATH_SEPARATO
 // If pPath is a relative path, this function makes it into an absolute path
 // using the current working directory as the base, or pStartingDir if it's non-NULL.
 // Returns false if it runs out of room in the string, or if pPath tries to ".." past the root directory.
-void V_MakeAbsolutePath( char *pOut, int outLen, const char *pPath, const char *pStartingDir = NULL );
+void V_MakeAbsolutePath( char *pOut, int outLen, const char *pPath, const char *pStartingDir = nullptr );
 
 // Creates a relative path given two full paths
 // The first is the full path of the file to make a relative path for.
@@ -682,7 +682,7 @@ inline void V_wcscat( INOUT_Z_CAP(cchDest) wchar_t *dest, const wchar_t *src, in
 template < class NameArray >
 int V_GenerateUniqueNameIndex( const char *prefix, const NameArray &nameArray, int startindex = 0 )
 {
-	if ( prefix == NULL )
+	if ( prefix == nullptr )
 		return 0;
 
 	int freeindex = startindex;
@@ -712,10 +712,10 @@ int V_GenerateUniqueNameIndex( const char *prefix, const NameArray &nameArray, i
 template < class NameArray >
 bool V_GenerateUniqueName( OUT_Z_CAP(memsize) char *name, int memsize, const char *prefix, const NameArray &nameArray )
 {
-	if ( name == NULL || memsize == 0 )
+	if ( name == nullptr || memsize == 0 )
 		return false;
 
-	if ( prefix == NULL )
+	if ( prefix == nullptr )
 	{
 		name[ 0 ] = '\0';
 		return false;
@@ -735,7 +735,7 @@ bool V_GenerateUniqueName( OUT_Z_CAP(memsize) char *name, int memsize, const cha
 		return true;
 	}
 
-	int newlen = prefixLength + ( int )log10( ( float )i ) + 1;
+	int newlen = prefixLength + static_cast<int>(log10(static_cast<float>(i))) + 1;
 	if ( newlen + 1 > memsize )
 	{
 		V_strncpy( name, prefix, memsize );
@@ -773,7 +773,7 @@ public:
 	explicit CStrAutoEncode( const char *pch )
 	{
 		m_pch = pch;
-		m_pwch = NULL;
+		m_pwch = nullptr;
 #if !defined( WIN32 ) && !defined(_WIN32)
 		m_pucs2 = NULL;
 		m_bCreatedUCS2 = false;
@@ -784,7 +784,7 @@ public:
 	// ctor
 	explicit CStrAutoEncode( const wchar_t *pwch )
 	{
-		m_pch = NULL;
+		m_pch = nullptr;
 		m_pwch = pwch;
 #if !defined( WIN32 ) && !defined(_WIN32)
 		m_pucs2 = NULL;
@@ -875,9 +875,9 @@ private:
 	{
 		if ( !m_bCreatedUTF16 )
 			return;					// no work to do
-		if ( m_pwch == NULL )
+		if ( m_pwch == nullptr )
 			return;					// don't have a UTF-16 string to convert
-		if ( m_pch != NULL )
+		if ( m_pch != nullptr )
 			return;					// already been converted to UTF-8; no work to do
 
 		// each Unicode code point can expand to as many as four bytes in UTF-8; we
@@ -909,9 +909,9 @@ private:
 	{
 		if ( m_bCreatedUTF16 )
 			return;					// no work to do
-		if ( m_pch == NULL )
+		if ( m_pch == nullptr )
 			return;					// no UTF-8 string to convert
-		if ( m_pwch != NULL )
+		if ( m_pwch != nullptr )
 			return;					// already been converted to UTF-16; no work to do
 
 		uint32 cchMax = static_cast<uint32>( V_strlen( m_pch ) ) + 1;

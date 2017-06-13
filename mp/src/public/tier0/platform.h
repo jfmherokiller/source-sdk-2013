@@ -21,23 +21,6 @@
 #define COMPILER_CLANG 1
 #endif
 
-#if defined( _X360 )
-	#define NO_STEAM
-	#define NO_VOICE
-	// for the 360, the ppc platform and the rtos are tightly coupled
-	// setup the 360 environment here !once! for much less leaf module include wackiness
-	// these are critical order and purposely appear *before* anything else
-	#define _XBOX
-#include <xtl.h>
-	#include <xaudio2.h>
-	#include <xbdm.h>
-#include <Xgraphics.h>
-	#include <xui.h>
-	#include <pmcpbsetup.h>
-#include <XMAHardwareAbstraction.h>
-	#undef _XBOX
-#endif
-
 #include "wchartypes.h"
 #include "basetypes.h"
 #include "tier0/valve_off.h"
@@ -174,13 +157,6 @@ typedef signed char int8;
 	#else
 		typedef __int32 intp;
 		typedef unsigned __int32 uintp;
-	#endif
-
-	#if defined( _X360 )
-		#ifdef __m128
-			#undef __m128
-		#endif
-		#define __m128				__vector4
 	#endif
 
 	// Use this to specify that a function is an override of a virtual function.
@@ -876,10 +852,10 @@ inline T WordSwapC( T w )
 {
    uint16 temp;
 
-   temp  = ((*((uint16 *)&w) & 0xff00) >> 8);
-   temp |= ((*((uint16 *)&w) & 0x00ff) << 8);
+   temp  = (*static_cast<uint16 *>(&w) & 0xff00) >> 8;
+   temp |= (*static_cast<uint16 *>(&w) & 0x00ff) << 8;
 
-   return *((T*)&temp);
+   return *static_cast<T*>(&temp);
 }
 
 template <typename T>
@@ -887,12 +863,12 @@ inline T DWordSwapC( T dw )
 {
    uint32 temp;
 
-   temp  =   *((uint32 *)&dw) 				>> 24;
-   temp |= ((*((uint32 *)&dw) & 0x00FF0000) >> 8);
-   temp |= ((*((uint32 *)&dw) & 0x0000FF00) << 8);
-   temp |= ((*((uint32 *)&dw) & 0x000000FF) << 24);
+   temp  =   *static_cast<uint32 *>(&dw) 				>> 24;
+   temp |= (*static_cast<uint32 *>(&dw) & 0x00FF0000) >> 8;
+   temp |= (*static_cast<uint32 *>(&dw) & 0x0000FF00) << 8;
+   temp |= (*static_cast<uint32 *>(&dw) & 0x000000FF) << 24;
 
-   return *((T*)&temp);
+   return *static_cast<T*>(&temp);
 }
 
 template <typename T>
@@ -905,14 +881,14 @@ inline T QWordSwapC( T dw )
 
 	uint64 temp;
 
-	temp  =   *((uint64 *)&dw) 				         >> 56;
-	temp |= ((*((uint64 *)&dw) & 0x00FF000000000000ull) >> 40);
-	temp |= ((*((uint64 *)&dw) & 0x0000FF0000000000ull) >> 24);
-	temp |= ((*((uint64 *)&dw) & 0x000000FF00000000ull) >> 8);
-	temp |= ((*((uint64 *)&dw) & 0x00000000FF000000ull) << 8);
-	temp |= ((*((uint64 *)&dw) & 0x0000000000FF0000ull) << 24);
-	temp |= ((*((uint64 *)&dw) & 0x000000000000FF00ull) << 40);
-	temp |= ((*((uint64 *)&dw) & 0x00000000000000FFull) << 56);
+	temp  =   *static_cast<uint64 *>(&dw) 				         >> 56;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x00FF000000000000ull) >> 40;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x0000FF0000000000ull) >> 24;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x000000FF00000000ull) >> 8;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x00000000FF000000ull) << 8;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x0000000000FF0000ull) << 24;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x000000000000FF00ull) << 40;
+	temp |= (*static_cast<uint64 *>(&dw) & 0x00000000000000FFull) << 56;
 
 	return *((T*)&temp);
 }
@@ -921,28 +897,7 @@ inline T QWordSwapC( T dw )
 // Fast swaps
 //-------------------------------------
 
-#if defined( _X360 )
-
-	#define WordSwap  WordSwap360Intr
-	#define DWordSwap DWordSwap360Intr
-
-	template <typename T>
-	inline T WordSwap360Intr( T w )
-	{
-		T output;
-		__storeshortbytereverse( w, 0, &output );
-		return output;
-	}
-
-	template <typename T>
-	inline T DWordSwap360Intr( T dw )
-	{
-		T output;
-		__storewordbytereverse( dw, 0, &output );
-		return output;
-	}
-
-#elif defined( _MSC_VER ) && !defined( PLATFORM_WINDOWS_PC64 )
+#if defined( _MSC_VER ) && !defined( PLATFORM_WINDOWS_PC64 )
 
 	#define WordSwap  WordSwapAsm
 	#define DWordSwap DWordSwapAsm
@@ -1141,7 +1096,7 @@ inline uint64 Plat_Rdtsc()
 	return ( uint64 )__rdtsc();
 #elif defined( _WIN32 )
   #if defined( _MSC_VER ) && ( _MSC_VER >= 1400 )
-	return ( uint64 )__rdtsc();
+	return static_cast<uint64>(__rdtsc());
   #else
     __asm rdtsc;
 	__asm ret;

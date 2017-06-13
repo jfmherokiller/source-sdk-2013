@@ -34,7 +34,7 @@ const char* ParseFileInternal( const char* pFileBytes, char* pTokenOut, bool* pW
 		*pWasQuoted = false;
 
 	if (!pFileBytes)
-		return 0;
+		return nullptr;
 
 	InitializeCharacterSets();
 

@@ -320,7 +320,7 @@ public:
 
 	T *operator->() { return *m_ppObject;	}
 	T &operator *() { return **m_ppObject;	}
-	operator T *() const { return (T*)(*m_ppObject);	}
+	operator T *() const { return static_cast<T*>(*m_ppObject);	}
 	operator void *() { return *m_ppObject;	}
 
 private:
